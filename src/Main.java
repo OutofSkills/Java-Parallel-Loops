@@ -6,18 +6,18 @@ import utils.Matrix;
 import java.util.Date;
 
 public class Main {
-
+	public static final Integer MATRIX_SIZE = 1000;
     public static final String SEQUENTIAL = "sequential";
     public static final String PARALLEL = "parallel";
-    public static final String STREAM_PARALLEL = "streamParallel";
+    public static final String STREAM_PARALLEL = "streams";
 
     public static void main(String[] args) {
         printResults();
     }
 
     private static void printResults() {
-        double[][] matrixA = MatrixUtil.generateMatrix(2000, 2000);
-        double[][] matrixB = MatrixUtil.generateMatrix(2000, 2000);
+        double[][] matrixA = Matrix.generateMatrix(MATRIX_SIZE, MATRIX_SIZE);
+        double[][] matrixB = Matrix.generateMatrix(MATRIX_SIZE, MATRIX_SIZE);
 
         printMatrixMultiplicationResults(matrixA, matrixB, SEQUENTIAL);
         printMatrixMultiplicationResults(matrixA, matrixB, PARALLEL);
@@ -25,14 +25,6 @@ public class Main {
     }
 
     private static void printMatrixMultiplicationResults(double[][] matrixA, double[][] matrixB, String type) {
-        if (matrixA.length < 100 && matrixB.length < 100) {
-            System.out.println("Matrix A : ");
-            Matrix.print(matrixA);
-
-            System.out.println("\nMatrix B : ");
-            Matrix.print(matrixB);
-        }
-
         Date start = new Date();
 
         double[][] result = new double[matrixA.length][matrixB[0].length];
@@ -46,12 +38,8 @@ public class Main {
         }
 
         Date end = new Date();
-
-        if (result.length < 100) {
-            System.out.println("\nOutput Matrix : ");
-            Matrix.print(result);
-        }
-
-        System.out.println("\nTime taken in milli seconds for " + type + " algorithm: " + (end.getTime() - start.getTime()));
+        
+        double timeDifferenceSeconds = (end.getTime() - start.getTime()) / 1000.0;
+        System.out.println("\nTime taken in seconds for " + type + " algorithm: " + timeDifferenceSeconds + " seconds");
     }
 }
